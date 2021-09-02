@@ -1,0 +1,26 @@
+{
+  "name": "sd-lab2-instancias",
+  "version": "1.0.0",
+  "description": "Construir un sistema similar al anterior pero que permita realizar un balanceo de carga en un servicio que recibe como parámetro una imagen y le pone un texto de una frase famosa en la parte inferior(se obtiene de un web service externo de terceros). Es decir cuando se realice una petición al middleware tiene que llevar un control de a quien le toca responder la petición basado en un sistema de turnos. Adicionalmente crear un servicio en el middleware que permita crear un nueva instancia y agregarla a la lista de servidores del balanceo de carga en caso de ser necesario y otro que a través de un consumo de servicios envíe una notificación por correo cuando un servidor no responda.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drox13/SD-lab2-instancias.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drox13/SD-lab2-instancias/issues"
+  },
+  "homepage": "https://github.com/drox13/SD-lab2-instancias#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
