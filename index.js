@@ -14,13 +14,16 @@ app.listen(port, () => {
 app.post('/image', (req, res) => {
   Jimp.read(Buffer.from(req.body.buffer.data))
     .then(image => {
+      console.log(req.body)
       const height = image.bitmap.height;
       const width = image.bitmap.width;
       axios.get('https://geek-jokes.sameerkumar.website/api?format=json').then(function (response) {
         Jimp.loadFont(Jimp.FONT_SANS_64_WHITE).then(font => {
-          image.print(font, width * 20 / 100, height * 80 / 100, response.data.joke);
           image.resize(800, 600);
+          image.print(font, width * 20 / 100, height * 80 / 100, response.data.joke);
+          console.log('hasta acá todo bien xd')
           res.send({width: image.bitmap.width, height: image.bitmap.height, pixels: Buffer.from(image.bitmap.data)})
+          console.log('hasta acá tal vez también xd')
         });
       }).catch(function (error) {
         console.error('Error ' + error.message)
