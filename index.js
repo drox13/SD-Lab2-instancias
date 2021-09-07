@@ -1,7 +1,6 @@
 const express = require('express')
 const axios = require('axios')
 const Jimp = require('jimp')
-var ip = require("ip");
 const app = express()
 const port = 4000
 
@@ -14,16 +13,21 @@ app.listen(port, () => {
 app.post('/image', (req, res) => {
   Jimp.read(Buffer.from(req.body.buffer.data))
     .then(image => {
-      console.log(req.body)
-      const height = image.bitmap.height;
-      const width = image.bitmap.width;
       axios.get('https://geek-jokes.sameerkumar.website/api?format=json').then(function (response) {
         Jimp.loadFont(Jimp.FONT_SANS_64_WHITE).then(font => {
-          image.resize(800, 600);
-          image.print(font, width * 20 / 100, height * 80 / 100, response.data.joke);
-          console.log('hasta acá todo bien xd')
+          let txt = {content: response.data.joke};
+          const txtWidth = Jimp.measureText(font, txt.content);
+          const txtHeight = Jimp.measureTextHeight(font, txt.content);
+          const height = image.bitmap.height;
+          const width = image.bitmap.width;
+          const txtHorizontalDivisions = txtWidth/(width*80 / 100);
+          const breakPosition = txt.content.length/txtHorizontalDivisions;
+          let index = 0;
+          for(let i = 0; i < txtHorizontalDivisions; i ++) {
+            image.print(font, width * 10 / 100, (height * 5 / 100) + (i*txtHeight), txt.content.substring(index,(i+1)*breakPosition));
+            index = (i+1)*breakPosition;
+          }
           res.send({width: image.bitmap.width, height: image.bitmap.height, pixels: Buffer.from(image.bitmap.data)})
-          console.log('hasta acá tal vez también xd')
         });
       }).catch(function (error) {
         console.error('Error ' + error.message)
