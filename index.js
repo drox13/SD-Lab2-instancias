@@ -13,6 +13,7 @@ app.listen(port, () => {
 app.post('/image', (req, res) => {
   Jimp.read(Buffer.from(req.body.buffer.data))
     .then(image => {
+<<<<<<< HEAD
       axios.get('https://geek-jokes.sameerkumar.website/api?format=json').then(function (response) {
         Jimp.loadFont(Jimp.FONT_SANS_64_WHITE).then(font => {
           let txt = {content: response.data.joke};
@@ -27,6 +28,16 @@ app.post('/image', (req, res) => {
             image.print(font, width * 10 / 100, (height * 5 / 100) + (i*txtHeight), txt.content.substring(index,(i+1)*breakPosition));
             index = (i+1)*breakPosition;
           }
+=======
+      console.log(req.body);
+      axios.get('https://geek-jokes.sameerkumar.website/api?format=json').then(function (response) {
+        Jimp.loadFont(Jimp.FONT_SANS_64_WHITE).then(font => {
+          image.resize(800, 600);
+          const height = image.bitmap.height;
+          const width = image.bitmap.width;
+          image.print(font, width * 20 / 100, height * 80 / 100, response.data.joke);
+          console.log('hasta acá todo bien xd')
+>>>>>>> 5782d3255d2e45e178e38bd78b0db8cf9edc1805
           res.send({width: image.bitmap.width, height: image.bitmap.height, pixels: Buffer.from(image.bitmap.data)})
         });
       }).catch(function (error) {
