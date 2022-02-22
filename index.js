@@ -11,6 +11,7 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 app.post('/image', (req, res) => {
+  console.log('requested')
   Jimp.read(Buffer.from(req.body.buffer.data))
     .then(image => {
       axios.get('https://geek-jokes.sameerkumar.website/api?format=json').then(function (response) {
