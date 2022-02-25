@@ -12,6 +12,11 @@ app.use(cors())
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+app.post('/im', (req, res) => {
+  res.send('recibido');
+});
+
 app.post('/image', (req, res) => {
   console.log('requested')
   Jimp.read(Buffer.from(req.body.buffer.data))
